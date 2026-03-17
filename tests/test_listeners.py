@@ -567,7 +567,7 @@ def test_parse_message_detects_solaar_undivert():
     event = parse_message(raw, products)
     assert isinstance(event, ExternalUndivertEvent)
     assert event.slot == 1
-    assert event.target_host_cid == 0xD1
+    assert event.target_host_cid == 0x00D1
 
 
 def test_parse_message_ignores_own_sw_id_undivert():

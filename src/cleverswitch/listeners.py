@@ -294,7 +294,7 @@ def parse_message(raw: bytes, products: dict[int, LogiProduct] | None = None) ->
     if products is None:
         products = {}
     divert_feat_idx = products[slot].divert_feat_idx if slot in products else None
-    target_host_cid = raw[5]
+    target_host_cid = (raw[4] << 8) | raw[5]
 
     cid_reporting_fn = function_id & 0xF0
     software_id = function_id & 0x0F
