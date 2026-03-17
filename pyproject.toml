@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cleverswitch"
+version = "0.2.2"
+description = "Synchronize host switching between Logitech MX Keys and MX Master 3"
+requires-python = ">=3.10"
+dependencies = [
+    "hid >= 1.0.9 ; sys_platform == 'win32'",  # provides hidapi.dll on Windows; Linux/macOS use system libhidapi
+    "pyyaml >= 6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest >= 7.0",
+    "pytest-mock >= 3.10",
+    "pytest-cov >= 4.0",
+]
+
+[project.scripts]
+cleverswitch = "cleverswitch.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--tb=short --cov --cov-fail-under=90"
+
+[tool.coverage.run]
+source = ["src/cleverswitch"]
+omit = [
+    "src/cleverswitch/hidpp/transport.py",  # hardware I/O — not unit-testable
+    "src/cleverswitch/__main__.py",          # entry-point runner — not unit-testable
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
